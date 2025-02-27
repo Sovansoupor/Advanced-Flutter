@@ -71,7 +71,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
   void onDepartureSelected() async {
     Location? selectedLocation = await Navigator.of(context).push<Location>(
       AnimationUtils.createBottomToTopRoute(
-        BlaLocationPicker(initRidePref: departure),
+        BlaLocationPicker(initLocation: departure),
       ),
     );
     // if a location is selected, update the state
@@ -86,7 +86,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
   void onArrivalSelected() async {
     final Location? selectedLocation = await Navigator.of(context).push(
       AnimationUtils.createBottomToTopRoute(
-        BlaLocationPicker(initRidePref: arrival),
+        BlaLocationPicker(initLocation: arrival),
       ),
     );
     if (selectedLocation != null) {
@@ -131,11 +131,15 @@ class _RidePrefFormState extends State<RidePrefForm> {
     });
   }
 
+
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
   String get departureName =>
       departure != null ? departure!.name : "Leaving from";
+
+  bool get showDepartureInput => departure != null;
+  bool get showArrivalInput => arrival != null;
 
   String get arrivalName => arrival != null ? arrival!.name : "Going to";
 
@@ -145,6 +149,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
   /// Enable swapping locations when both are set
   bool get swapEnabled => arrival != null && departure != null;
+
+
 
   // ----------------------------------
   // Build the widgets
@@ -159,16 +165,19 @@ class _RidePrefFormState extends State<RidePrefForm> {
           children: [
             // 1- Departure location
             RidePrefTile(
+              isInput:  showDepartureInput,
               title: departureName,
               iconLeft: Icons.circle_outlined,
               onTap: onDepartureSelected,
-              iconRight: swapEnabled ? Icons.swap_vert : null,
-              onRightTap: swapEnabled ? () {} : null,
+             iconRight: swapEnabled ? Icons.swap_vert : null,
+             onRightTap: swapEnabled ? onSwapLocations : null,
+             
             ),
             BlaDivider(),
 
             // 2- Arrival location
             RidePrefTile(
+              isInput: showArrivalInput,
                 title: arrivalName,
                 iconLeft: Icons.circle_outlined,
                 onTap: onArrivalSelected),
