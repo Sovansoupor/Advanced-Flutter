@@ -1,45 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:week_3_blabla_project/widgets/inputs/bla_location_picker.dart';
-// import 'package:week_3_blabla_project/model/ride/locations.dart';
+import 'package:week_3_blabla_project/screens/ride/widgets/ride_tiles.dart';
+import 'package:week_3_blabla_project/screens/ride/widgets/ride_bar.dart';
 
+import '../../model/ride/ride.dart';
 import '../../model/ride_pref/ride_pref.dart';
-import '../../utils/animations_util.dart';
+import '../../service/rides_service.dart';
+import '../../theme/theme.dart';
 
 class RideScreen extends StatefulWidget {
-  final RidePref? initialRidePref;
+  final RidePref initialRidePref;
 
-  const RideScreen({super.key, this.initialRidePref});
+  const RideScreen({super.key, required this.initialRidePref});
 
   @override
   State<RideScreen> createState() => _RideScreenState();
 }
 
 class _RideScreenState extends State<RideScreen> {
-  onRidePrefSelected(RidePref ridePref) {
-    // 1 - Navigate to the rides screen (with a buttom to top animation)
-    Navigator.of(context).push(AnimationUtils.createBottomToTopRoute(
-        RideScreen(initialRidePref: ridePref)));
+  List<Ride> get matchingRides =>
+      RidesService.getRidesFor(widget.initialRidePref);
+
+      
+
+  void onFilterPressed() {
+    //("onFilterPressed");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          BlaLocationPicker(),
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: BlaSpacings.m,
+          right: BlaSpacings.m,
+          top: BlaSpacings.s,
+        ),
+        child: Column(
+          children: [
+            // 1. search bar
+            RideBar(
+              ridePref: widget.initialRidePref,
+              onFilterPressed: onFilterPressed,
+            ),
 
-        ],
+            // 2. display ride tiles
+            Expanded(
+              child: ListView.builder(
+                itemCount: matchingRides.length,
+                itemBuilder:
+                    (ctx, index) =>
+                        RideTiles(ride: matchingRides[index], onPressed: () {}),
+              ),
+            ),
+          ],
+        ),
       ),
     );
-  }
-}
-
-
-class RideTiles extends StatelessWidget {
-  const RideTiles({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
