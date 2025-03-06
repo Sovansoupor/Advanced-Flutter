@@ -10,7 +10,7 @@ class RidePrefModal extends StatefulWidget {
 
   const RidePrefModal({
 
-    super.key,     
+    super.key, required RidePreference currentPreference,     
      // TODO 7 : We should pass the current prefs to this moda; 
   });
  

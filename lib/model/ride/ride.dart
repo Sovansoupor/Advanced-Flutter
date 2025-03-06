@@ -3,6 +3,7 @@
 
 import 'package:week_3_blabla_project/model/ride/locations.dart';
 
+import '../../service/rides_service.dart';
 import '../../utils/date_time_util.dart';
 import '../user/user.dart';
 
@@ -24,9 +25,9 @@ class Ride {
   final DateTime arrivalDateTime;
 
   final User driver;
-
   final int availableSeats;
   final double pricePerSeat;
+  final bool acceptPets;
 
   RideStatus status = RideStatus.created;
 
@@ -40,6 +41,7 @@ class Ride {
     required this.driver,
     required this.availableSeats,
     required this.pricePerSeat,
+    this.acceptPets = false,
   });
 
   void addPassenger(User passenger) {
@@ -47,6 +49,8 @@ class Ride {
   }
 
   int get remainingSeats => availableSeats - passengers.length;
+
+  get acceptsPets => null;
 
   @override
   String toString() {

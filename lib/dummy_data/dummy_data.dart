@@ -177,6 +177,7 @@ List<Ride> fakeRides = List.generate(50, (index) {
     arrivalDateTime: arrivalTime,
     driver: driver,
     availableSeats: availableSeats,
-    pricePerSeat: pricePerSeat,
+    pricePerSeat: pricePerSeat, 
+    acceptPets: random.nextBool(),
   );
 });
