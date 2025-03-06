@@ -86,7 +86,7 @@ class MockRidesRepository extends RideRepository{
       acceptPets: true,
     );
 
-    r4 = Ride(
+    r5 = Ride(
       departureLocation: Location(name: 'Battambong', country: Country.cambodia), 
       arrivalLocation: Location(name: 'Siem Reap', country: Country.cambodia),
       departureDate: DateTime(time.year, time.month, time.day, 5, 0),
@@ -106,10 +106,6 @@ class MockRidesRepository extends RideRepository{
 
   }
 
-  @override
-  void addRide(Ride ride) {
-    // TODO: implement addRide
-  }
 
   @override
   List<Ride> getRides(RidePreference preference, RidesFilter? filter) {
