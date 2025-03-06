@@ -19,6 +19,8 @@ import 'ride_pref_input_tile.dart';
 ///
 /// The form can be created with an existing RidePref (optional).
 ///
+///
+
 class RidePrefForm extends StatefulWidget {
   const RidePrefForm( {super.key, required this.initialPreference, required this.onSubmit});
 
@@ -30,6 +32,7 @@ class RidePrefForm extends StatefulWidget {
 }
 
 class _RidePrefFormState extends State<RidePrefForm> {
+DateTime now = DateTime.now();
   Location? departure;
   late DateTime departureDate;
   Location? arrival;
@@ -52,7 +55,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     } else {
       // If no given preferences, we select default ones :
       departure = null; // User shall select the departure
-      departureDate = DateTime.now(); // Now  by default
+      departureDate = DateTime(now.year, now.month, now.day, 0, 0);
       arrival = null; // User shall select the arrival
       requestedSeats = 1; // 1 seat book by default
     }

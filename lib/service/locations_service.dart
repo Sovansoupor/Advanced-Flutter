@@ -14,6 +14,7 @@ class LocationsService {
   final LocationsRepository repository;
 
   LocationsService._internal(this.repository);
+  
 
   // get the list of locations
   List<Location> getLocations() {

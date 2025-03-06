@@ -1,5 +1,3 @@
-
-
 import 'package:week_3_blabla_project/model/ride/locations.dart';
 import 'package:week_3_blabla_project/model/ride_pref/ride_pref.dart';
 import 'package:week_3_blabla_project/service/rides_service.dart';
@@ -109,10 +107,15 @@ class MockRidesRepository extends RideRepository{
 
   @override
   List<Ride> getRides(RidePreference preference, RidesFilter? filter) {
-    return [r1, r2, r3, r4, r5];
+    List<Ride> rides = [r1, r2, r3, r4, r5];
+    return rides.where((ride) =>
+       ride.departureLocation.name == preference.departure.name &&
+          ride.arrivalLocation.name == preference.arrival.name &&
+          ride.departureDate.isAfter(preference.departureDate)
+          && ride.availableSeats >= preference.requestedSeats
+          && (filter == null || filter.acceptPets == ride.filter?.acceptPets)
+    ).toList();
   }
-
-  
 
 
 }
